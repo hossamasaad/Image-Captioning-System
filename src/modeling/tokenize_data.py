@@ -67,18 +67,18 @@ def tokenize(captions):
     for image in captions.keys():
         captions[image] = tokenizer.texts_to_sequences(captions[image])
 
-    return captions
+    return captions, word_index
 
 
-def save_captions(captions: dict, save_path: str) -> None:
+def save(file: dict, save_path: str) -> None:
     """
     Pickle captions map and save it
     Args:
-        captions (dict): Captions map image_to_sequences to save
-        save_path (str): path to save captions
+        file (dict): file to save
+        save_path (str): path to save
     """
-    with open(save_path, "wb") as file:
-        pickle.dump(captions, file)
+    with open(save_path, "wb") as f:
+        pickle.dump(file, f)
 
 
 def main():
@@ -94,11 +94,10 @@ def main():
     # Add tokens
     captions = add_tokens(captions)
     # tokenize
-    captions = tokenize(captions)
+    captions, word_index = tokenize(captions)
     # save image_sequences
-    save_captions(captions, "data/image_to_sequences.pkl")
-
-    return captions
+    save(captions, "data/image_to_sequences.pkl")
+    save(word_index, "data/word_index.pkl")
     
     
 if __name__ == "__main__":
