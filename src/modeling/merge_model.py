@@ -4,7 +4,7 @@ from tensorflow.keras.layers import Dense, LSTM, Add, Dropout, Embedding, Reshap
 
 class MergeDecoder(Model):
 
-    def __init__(self, vocab_size, embbeding_dim, max_length) -> None:
+    def __init__(self, vocab_size, embbeding_dim) -> None:
         super(MergeDecoder, self).__init__(name='decoder')
 
         self.dropout1 = Dropout(0.5)

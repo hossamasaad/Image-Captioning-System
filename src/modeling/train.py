@@ -3,11 +3,14 @@ import pickle
 import argparse
 import numpy as np
 from merge_model import MergeDecoder
+from google_nic import GoogleNIC
+
 from datagenerator import DataGenerator
 from tensorflow.keras.layers import Input
 
 MODELS = {
-    "merge": MergeDecoder(vocab_size=8433, embbeding_dim=200, max_length=201)
+    "merge": MergeDecoder(vocab_size=8433, embbeding_dim=200),
+    "google_nic": GoogleNIC(vocab_size=8433, embbeding_dim=200)
 }
 
 
