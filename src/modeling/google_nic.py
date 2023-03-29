@@ -5,13 +5,13 @@ from tensorflow.keras.layers import Dense, LSTM, Add, Dropout, Embedding, Reshap
 
 class GoogleNIC(Model):
 
-    def __init__(self, vocab_size, embbeding_dim, max_length) -> None:
+    def __init__(self, vocab_size, embedding_dim) -> None:
         super(GoogleNIC, self).__init__(name='decoder')
 
         self.dropoutA = Dropout(0.5)
         self.denseA =  Dense(200, activation='relu')
 
-        self.EmbeddingB = Embedding(vocab_size, embbeding_dim, mask_zero=True)
+        self.EmbeddingB = Embedding(vocab_size, embedding_dim, mask_zero=True)
         self.dropoutB = Dropout(0.5)
        
         self.add = Add()

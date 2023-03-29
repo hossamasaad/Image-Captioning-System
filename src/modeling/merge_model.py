@@ -4,13 +4,13 @@ from tensorflow.keras.layers import Dense, LSTM, Add, Dropout, Embedding, Reshap
 
 class MergeDecoder(Model):
 
-    def __init__(self, vocab_size, embbeding_dim) -> None:
+    def __init__(self, vocab_size, embedding_dim) -> None:
         super(MergeDecoder, self).__init__(name='decoder')
 
         self.dropout1 = Dropout(0.5)
         self.dense1 =  Dense(512, activation='relu')
 
-        self.Embedding = Embedding(vocab_size, embbeding_dim, mask_zero=True)
+        self.Embedding = Embedding(vocab_size, embedding_dim, mask_zero=True)
         self.dropout2 = Dropout(0.5)
         self.LSTM = Bidirectional(LSTM(256))
 
