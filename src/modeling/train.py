@@ -113,7 +113,7 @@ def main(args):
     )
 
     # save model
-    save_model(model, save_path=f"{args.model_name}_v1.pkl")
+    save_model(model, save_path=f"{args.model}_v1.pkl")
 
 
 if __name__ == "__main__":

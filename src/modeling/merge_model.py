@@ -31,8 +31,6 @@ class MergeDecoder(Model):
         B = self.dropout2(B)
         B = self.LSTM(B)
 
-        print(A.shape)
-        print(B.shape)
         decoder = self.add([A, B])
         decoder = self.dense2(decoder)
 
