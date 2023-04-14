@@ -8,6 +8,7 @@ from google_nic import GoogleNIC
 from datagenerator import DataGenerator
 from tensorflow.keras.layers import Input
 
+
 MODELS = {
     "merge": MergeDecoder(vocab_size=8433, embedding_dim=200),
     "google_nic": GoogleNIC(vocab_size=8433, embedding_dim=200)

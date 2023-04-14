@@ -1,40 +1,65 @@
+import requests
 import streamlit as st
 
 
-# General settings
+# -------------- General settings ----------------
+
 st.title("Image Captioning ")
 submit = None
 
+# --------------- File uploading ------------------
 
-# File upload
 uploading = st.container()
-
 upload_columns = uploading.columns([2, 1])
 uploaded_file = upload_columns[0].file_uploader(
     label="Upload an Image",
-    type=['png', 'jpg'],
+    type=['png', 'jpg', 'jpeg'],
     accept_multiple_files=False
 )
 
 if uploaded_file:
     upload_columns[1].image(uploaded_file)
-
 st.markdown("""---""")
 
 
-# Choosing Model
+# ----------------- Choosing Model -----------------
+
 if uploaded_file:
     submitting = st.container()
-    model_type = submitting.selectbox('', ["Model 1", "Model 2", "Model 3"])
+    model_type = submitting.selectbox('', ["vit-gpt2", "Model 2", "Model 3"])
     submit = submitting.button("Caption it!")
     st.markdown("""---""")
 
 
-# Generation
+
+# ----------------- Generation ----------------------
+
 generating = st.container()
 if submit:
-    generating.write(
-        """
+
+    # Save uploaded image
+    with open(f"saved_images/{uploaded_file.name}", "wb") as file:
+        file.write(uploaded_file.getbuffer())
+        
+    # make request
+    caption = ""
+    data = {
+        "image_path": "src/app/saved_images/" + uploaded_file.name
+    }
+
+    # Send request
+    if model_type == "vit-gpt2":
+        response = requests.post(
+            "http://127.0.0.1:8000/vit",
+            json=data
+        )
+
+        caption = response.json()["caption"][0]
+    else:
+        caption = "Not implementeed yet"
+    
+    # Caption style
+    html = """
         <style type="text/css">
             .generated-text {
                 font-family:Courier, monospace;
@@ -46,6 +71,6 @@ if submit:
                 padding:20px;
             } 
         </style>
-        <p class="generated-text">A handsome guy with cute smile</p>
-        """,
-    unsafe_allow_html=True)
+    """
+    html += f'<p class="generated-text">{caption}</p>' 
+    generating.write(html, unsafe_allow_html=True)
